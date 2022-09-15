@@ -74,3 +74,28 @@ ON Feb.orderid=cust.order_id
 WHERE Feb.Quantity>2
 /* Results: 890	4.16938177874185 */
 
+/* #8: List all the products sold in Los Angeles in February, and include how many of each were sold. */
+SELECT Product, sum(quantity)
+FROM BIT_DB.FebSales
+WHERE location like '%Los Angeles%'
+GROUP BY Product
+/* Results: Total rows loaded: 19
+LG Dryer	5
+LG Washing Machine	6
+Vareebadd Phone	25
+Flatscreen TV	36
+ThinkPad Laptop	42
+20in Monitor	44
+Macbook Pro Laptop	46
+Google Phone	52
+34in Ultrawide Monitor	63
+27in 4K Gaming Monitor	70
+iPhone	71
+27in FHD Monitor	81
+Bose SoundSport Headphones	131
+Apple Airpods Headphones	140
+Wired Headphones	191
+Lightning Charging Cable	243
+USB-C Charging Cable	271
+AA Batteries (4-pack)	293
+AAA Batteries (4-pack)	351 */
