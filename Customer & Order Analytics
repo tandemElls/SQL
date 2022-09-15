@@ -1,4 +1,5 @@
-/* In this SQL code, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. */
+/* In this SQL code, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.
+The BIT_DB practice database used for these exercises can be found at https://github.com/tandemElls/SQL/blob/main/BIT_DB */
 
 
 /* #1: How many orders were placed in January? */
