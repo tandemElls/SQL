@@ -99,3 +99,41 @@ Lightning Charging Cable	243
 USB-C Charging Cable	271
 AA Batteries (4-pack)	293
 AAA Batteries (4-pack)	351 */
+
+/* #9: Which locations in New York received at least 3 orders in January, and how many orders did they each receive? (Hint: use HAVING). */
+SELECT distinct location, COUNT(orderID)
+FROM BIT_DB.JanSales
+WHERE location like '%NY%'
+GROUP BY location
+HAVING COUNT(orderID) > 2
+;
+
+/* #10: How many of each type of headphone were sold in February? */
+SELECT SUM(Quantity) as Quantity, Product
+FROM BIT_DB.FebSales
+WHERE Product like '%Headphones%'
+GROUP BY Product
+;
+
+/* #11: What was the average amount spent per account in February? */
+SELECT sum(Quantity*price) / count(cust.acctnum)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON Feb.orderid=cust.order_id
+;
+
+/* #12: What was the average quantity of products purchased per account in February? */
+SELECT sum(quantity) / count(cust.acctnum)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON Feb.orderid=cust.order_id
+;
+
+/* #13: Which product brought in the most revenue in January and how much revenue did it bring in total?  */
+SELECT Product,
+sum(quantity*price)
+FROM BIT_DB.JanSales
+GROUP BY Product
+ORDER BY sum(quantity*price) desc
+LIMIT 1
+;
