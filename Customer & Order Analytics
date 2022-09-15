@@ -5,58 +5,39 @@ The BIT_DB practice database used for these exercises can be found at https://gi
 /* #1: How many orders were placed in January? */
 SELECT COUNT(orderID)
 FROM BIT_DB.JanSales
-/* Result: 9723 */
+;
 
 /* #2: How many of those orders were for an iPhone? */
 SELECT COUNT(Product)
 FROM BIT_DB.JanSales
 WHERE Product = 'iPhone'
-/* Result: 379 */
+;
 
 /* #3: Select the customer account numbers for all the orders that were placed in February. */
 SELECT acctnum
 FROM BIT_DB.customers
 INNER JOIN BIT_DB.FebSales
 ON BIT_DB.customers.order_id = BIT_DB.FebSales.orderID
+;
 /* here is the same query abbreviated */
 SELECT acctnum
 FROM BIT_DB.customers cust
 INNER JOIN BIT_DB.FebSales Feb
 ON cust.order_id = Feb.orderID
-/* Results: "Total rows loaded: 13618" ; remainder snipped for brevity */
+;
 
 /* #4: Which product was the cheapest one sold in January, and what was the price? */
 SELECT DISTINCT Product, price
 FROM BIT_DB.JanSales
 WHERE price is (SELECT MIN(price) FROM BIT_DB.JanSales)
-/* Result: AAA Batteries (4-pack) 2.99 */
+;
 
 /* #5: What is the total revenue for each product sold in January?
 (Revenue can be calculated using the number of products sold and the price of the products). */
 SELECT SUM(quantity) * price as revenue, product
 FROM BIT_DB.JanSales
 GROUP BY product
-/* Results: "Total rows loaded: 21"
-23647.85	20in Monitor
-121676.88	27in 4K Gaming Monitor
-62845.810000000005	27in FHD Monitor
-119316.86	34in Ultrawide Monitor
-5472	AA Batteries (4-pack)
-4772.04	AAA Batteries (4-pack)
-122100	Apple Airpods Headphones
-65893.41	Bose SoundSport Headphones
-72900	Flatscreen TV
-190800	Google Phone
-23400	LG Dryer
-25200	LG Washing Machine
-17207.45	Lightning Charging Cable
-399500	Macbook Pro Laptop
-0	Product
-216997.83000000002	ThinkPad Laptop
-15343.8	USB-C Charging Cable
-50000	Vareebadd Phone
-12961.19	Wired Headphones
-265300	iPhone */
+;
 
 /* #6: Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue? */
 SELECT SUM(Quantity), product,
@@ -64,7 +45,7 @@ SUM(Quantity)*price as revenue
 FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY Product
-/* Results: 2	AA Batteries (4-pack)	7.68 */
+;
 
 /* #7: How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers? */
 SELECT COUNT(cust.acctnum), AVG(Quantity*price)
@@ -72,33 +53,14 @@ FROM BIT_DB.FebSales Feb
 LEFT JOIN BIT_DB.customers cust
 ON Feb.orderid=cust.order_id
 WHERE Feb.Quantity>2
-/* Results: 890	4.16938177874185 */
+;
 
 /* #8: List all the products sold in Los Angeles in February, and include how many of each were sold. */
 SELECT Product, sum(quantity)
 FROM BIT_DB.FebSales
 WHERE location like '%Los Angeles%'
 GROUP BY Product
-/* Results: Total rows loaded: 19
-LG Dryer	5
-LG Washing Machine	6
-Vareebadd Phone	25
-Flatscreen TV	36
-ThinkPad Laptop	42
-20in Monitor	44
-Macbook Pro Laptop	46
-Google Phone	52
-34in Ultrawide Monitor	63
-27in 4K Gaming Monitor	70
-iPhone	71
-27in FHD Monitor	81
-Bose SoundSport Headphones	131
-Apple Airpods Headphones	140
-Wired Headphones	191
-Lightning Charging Cable	243
-USB-C Charging Cable	271
-AA Batteries (4-pack)	293
-AAA Batteries (4-pack)	351 */
+;
 
 /* #9: Which locations in New York received at least 3 orders in January, and how many orders did they each receive? (Hint: use HAVING). */
 SELECT distinct location, COUNT(orderID)
