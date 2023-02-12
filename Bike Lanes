@@ -1,0 +1,14 @@
+/* CTE Practice with Bike Lane Data
+Find all the bike lanes that have an average safety rating of 4.0 or higher. Show the average safety rating for each of those bike lanes,
+and add a label that says "Safe Lane". */
+
+WITH safety_average_cte AS (
+SELECT street, AVG(safetyrating) as 'rating'
+FROM citybikelanes
+GROUP BY street
+)
+SELECT street,
+rating,
+'safe lane' as 'label'
+FROM safety_average_cte
+WHERE rating >=4
